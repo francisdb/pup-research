@@ -33,6 +33,8 @@ Dim PuPlayer
 Set PuPlayer = CreateObject("PinUpPlayer.PinDisplay")
 
 PuPlayer.LabelNew pBackglass,"Play2score",numberfont,	5,0  ,0,0,1,55,85,1,0
+
+PuPlayer.B2SData "E"&EventNum,1  'send event to Pup-Pack
 ...
 ```
 
