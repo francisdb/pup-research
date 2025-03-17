@@ -44,7 +44,7 @@ TODO
 
 ### SendMSG
 
-NailBuster thinks nobody should be using these calls directly https://www.vpforums.org/index.php?showtopic=47811&p=487964
+> NailBuster thinks nobody should be using these calls directly https://www.vpforums.org/index.php?showtopic=47811&p=487964
 
 Example:
 ```vbscript
