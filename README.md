@@ -160,7 +160,7 @@ Functions:
   end Sub
   ```
 * `51` - set media play position in ms `{ "mt":301, "SN": XX, "FN":51, "SP": 3431}` - SP position in ms
-  ```
+  ```vbscript
   Sub pSetVideoPosMS(mPOS)  'set position of video/audio in ms,  must be playing already or will be ignored.  { "mt":301, "SN": XX, "FN":51, "SP": 3431} 
     PuPlayer.SendMSG "{ ""mt"":301, ""SN"": "& "5"& ", ""FN"": 51, ""SP"":"&mPOS&" }"
   end Sub
