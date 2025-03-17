@@ -54,32 +54,129 @@ PuPlayer.SendMSG "{ 'mt':301, 'SN': 2, 'FN':15, 'CP':'99,15,15,70,70' }"  'custo
 JSON body but extended where properties can also be quoted with single quotes.
 
 * `MT` = ??? (always 301?)
-* `SN` = screen number (see screens.pup)
+* `SN` = screen number (see `screens.pup` or`AddScreen` in script)
 * `FN` = function
 
 Functions:
-* `3` - hide(/show?) screen - `"{ ""mt"":301, ""SN"": 13, ""FN"":3, ""OT"": 0 }"`
+* `2` - ???
+  ```vbscript
+  Sub pDisableLoopRefresh(PuPID)
+     PuPlayer.SendMSG "{ ""mt"":301, ""SN"": "&PuPID& ", ""FN"": 2, ""FF"":0, ""FO"":0 }"   
+  end Sub  
+  ```
+* `3` - hide/show overlay text - `{ "mt":301, "SN": XX, "FN":3, "OT": 0 }` - OT 0/1 overlay text on off bool
+  ```vbscript
+  sub pAllVisible(lvis)   '0/1 to show hide pup text overlay and HUD
+    PuPlayer.SendMSG "{ ""mt"":301, ""SN"": "& "5"& ",""OT"":"&lvis&", ""FN"": 3 }"             'hideoverlay text force
+  end Sub
+  ```
 * `4` - set StayOnTop - `{ "mt":301, "SN": XX, "FN":4, "FS":1/0 }`
-* `6` - bring screen to front ` "{ ""mt"":301, ""SN"": " & pDMDText & ", ""FN"":6 }"`
+* `6` - bring screen to front `{ "mt":301, "SN": XX, "FN":6 }`
 * `10` - set ??? volume `{ "mt":301, "SN": XX, "FN":10, "VL":9}`  VL=volume level
 * `11` - set screen sound volume 0-100 `"{ ""mt"":301, ""SN"": "&pMusic&", ""FN"":11, ""VL"":"&VolMusic&" }"`
 * `12` - STOPSCREEN `{screenNum=18, screenDes=Apron Right, mode=PUP_SCREEN_MODE_FORCE_BACK}, fn=12, szMsg={ "mt":301, "SN": 18, "FN":12 }`
 * `15` - set screen custom position (relative positions in %)
   `{ 'mt':301, 'SN':15,'FN':15,'CP':'5,0,0,100,100'} ' show screen`
   `{ 'mt':301, 'SN':15,'FN':15,'CP':'5,0,0,0,0'} 	' Hide the screen `
-* `16` - launch executable `"{ ""mt"":301, ""SN"": 2, ""FN"":16, ""EX"": """&PuPMiniGameExe  &""", ""WT"": """&PuPMiniGameTitle&""", ""RS"":1 , ""TO"":15 , ""WZ"":0 , ""SH"": 1 , ""FT"":""Visual Pinball Player"" }" `
+* `16` - launch executable - WT: Window Title
+    `{ ""mt"":301, ""SN"": 2, ""FN"":16, ""EX"": """&PuPMiniGameExe  &""", ""WT"": """&PuPMiniGameTitle&""", ""RS"":1 , ""TO"":15 , ""WZ"":0 , ""SH"": 1 , ""FT"":""Visual Pinball Player"" }`
+    `{ ""mt"":301, ""SN"": 2, ""FN"":16, ""EX"": ""Pupinit.bat"", ""WT"": """", ""RS"":1 , ""TO"":15 , ""WZ"":0 , ""SH"": 1 , ""FT"":""Visual Pinball Player"" }`
+* `17` { ""mt"":301, ""SN"": ""2"", ""FN"":17, ""WT"":""Visual Pinball Player"", ""WZ"": 1, ""WP"": 1 } -  WT: Window Title / WZ: HWND_BOTTOM=1 / WP: SWP_NOSIZE=1
+  ```vbscript
+  Sub pResynchLayers()	' For desktop users this will force VPX to the back so pup is in front (Disabled since David has cut through working now)
+  	exit sub 
+  	if bDesktop then
+  		' WT: Window Title 
+  		' WZ: HWND_BOTTOM=1
+  		' WP: SWP_NOSIZE=1
+  		PuPlayer.SendMSG "{ ""mt"":301, ""SN"": ""2"", ""FN"":17, ""WT"":""Visual Pinball Player"", ""WZ"": 1, ""WP"": 1 }"
+  	End if 
+  End Sub
+  ```
+* `20` - `{ "mt":301, "SN"": XX, "FN":20, "AM": 1, "AV": 170 }` also related to transparency?
 * `22` - set transparency
   `PuPlayer.SendMSG "{ ""mt"":301, ""SN"": " & pTransp &", ""FN"":22, ""AM"":1, ""AV"":255 }"  ' make opaque`
   `PuPlayer.SendMSG "{ ""mt"":301, ""SN"": " & pTransp &", ""FN"":22, ""AM"":1, ""AV"":80 }" ' Make Transparent `
-* `30` - PUPDisplayAsJukebox - `"{'mt':301, 'SN': " & pupid & ", 'FN':30, 'PM':1 }"`
-* `31` - pup jukebox control - `"{'mt':301, 'SN': " & pupid & ", 'FN':31, 'PM':1 }"` - PM 1 = next, PM 2 = previous
-* `32` - no antialias on font render ` "{ ""mt"":301, ""SN"": 1, ""FN"":32, ""FQ"":3 }" `
-* `33` - set pupdmd for mirror and hide behind other pups???  `"{ ""mt"":301, ""SN"": 2, ""FN"":33 }" `
-* `34` - hideoverlay text during next videoplay on DMD auto return??? `"{ ""mt"":301, ""SN"": "& pDisp &", ""FN"": 34 }"`
+* `30` - PUPDisplayAsJukebox - `{'mt':301, 'SN': XX, 'FN':30, 'PM':1 }`
+  ```vbscript
+  'jukebox mode will auto advance to next media in playlist and you can use next/prior sub to manuall advance
+  'you should really have a specific pupid# display like musictrack that is only used for the playlist
+  'sub PUPDisplayAsJukebox(pupid) needs to be called/set prior to sending your first media to that pupdisplay.
+  'pupid=pupdiplay# like pMusic
+  Sub PUPDisplayAsJukebox(pupid)
+  	PuPlayer.SendMSG("{'mt':301, 'SN': " & pupid & ", 'FN':30, 'PM':1 }")
+  End Sub
+  ```
+* `31` - pup jukebox control - `{'mt':301, 'SN': XX, 'FN':31, 'PM':1 }` - PM 1 = next, PM 2 = previous
+```vbscript
+Sub PuPlayListPrior(pupid)
+	PuPlayer.SendMSG("{'mt':301, 'SN': " & pupid & ", 'FN':31, 'PM':1 }")
+End Sub
 
-TODO: Some more functions documented here:
-https://github.com/mpcarr/aztec-quest/blob/682d81fc78cd66c83d2038246be44a65f062d2f3/scripts/dest/mpf/tablescript.vbs#L7123-L7253
-(these seem to be part of the `PUPDMD FRAMEWORK v3.0 BETA` txt file, not sure where to get that)
+Sub PuPlayListNext(pupid)
+	PuPlayer.SendMSG("{'mt':301, 'SN': " & pupid & ", 'FN':31, 'PM':2 }")
+End Sub
+```
+* `32` - no antialias on font render `{ "mt":301, "SN": 1, "FN":32, "FQ":3 }` FQ - font quality (3 = no aa?)
+* `33` - set pupdmd for mirror and hide behind other pups???  `"{ "mt":301, "SN": XX, "FN":33 } `
+* `34` - hideoverlay text during next videoplay on DMD auto return??? `{ "mt":301, "SN": XX, "FN": 34 }`
+* `41` - set safeloop mode on current playing media - `{ "mt":301, "SN": XX, "FN":41 }`
+  ```vbscript
+  'set safeloop mode on current playing media.  Good for background videos that refresh often?  { "mt":301, "SN": XX, "FN":41 }
+  Sub pSafeLoopModeCurrentVideo(PuPID)
+     PuPlayer.SendMSG "{ ""mt"":301, ""SN"": "&PuPID& ", ""FN"": 41 }"
+  end Sub
+  ```
+* `42` - duck audio volume - `{ "mt":301, "SN": XX, "FN": 42, "DV": duck_volume , "ALL":1 }` ALL 1 = optional
+  ```vbscript
+  Sub AudioDuckPuP(MasterPuPID,VolLevel)  
+    'will temporary volume duck all pups (not masterid) till masterid currently playing video ends.  will auto-return all pups to normal.
+    'VolLevel is number,  0 to mute 99 for 99%  
+    PuPlayer.SendMSG "{ ""mt"":301, ""SN"": "& MasterPuPID& ", ""FN"": 42, ""DV"": "&VolLevel&" }"             
+  end Sub
+
+  Sub AudioDuckPuPAll(MasterPuPID,VolLevel)  
+    'will temporary volume duck all pups (not masterid) till masterid currently playing video ends.  will auto-return all pups to normal.
+    'VolLevel is number,  0 to mute 99 for 99%  
+    PuPlayer.SendMSG "{ ""mt"":301, ""SN"": "& MasterPuPID& ", ""FN"": 42, ""DV"": "&VolLevel&" , ""ALL"":1 }"             
+  end Sub
+  ```  
+* `45` - slow pc mode `{ "mt":301, "SN":XX, "FN":45, "SP":1 }` - SP 0/1 = slow pc mode bool
+  ```vbscript
+  Sub pSetLowQualityPc  'sets fulldmd to run in lower quality mode (slowpc mode)  AAlevel for text is removed and other performance/quality items.  default is always run quality, 
+     PuPlayer.SendMSG "{ ""mt"":301, ""SN"": 5, ""FN"":45, ""SP"":1 }"    'slow pc mode
+  end Sub
+  ```
+* `46` - pad all text `{ "mt":301, "SN": XX, "FN":46, "PA":1 }` - PA 0/1 = padd text bool
+  ```vbscript
+  Sub pDMDAlwaysPAD  'will pad all text with a space before and after to help with possible text clipping.
+     PuPlayer.SendMSG "{ ""mt"":301, ""SN"": XX, ""FN"":46, ""PA"":1 }"    'slow pc mode
+  end Sub
+  ```  
+* `50` - set aspect ratio `{ "mt":301, ""SN": XX, "FN": 50, "WIDTH": arWidth, "HEIGHT": arHeight }`
+  ```vbscript
+  Sub pSetAspectRatio(PuPID, arWidth, arHeight)
+     PuPlayer.SendMSG "{ ""mt"":301, ""SN"": "&PuPID& ", ""FN"": 50, ""WIDTH"": "&arWidth&", ""HEIGHT"": "&arHeight&" }"
+  end Sub
+  ```
+* `51` - set media play position in ms `{ "mt":301, "SN": XX, "FN":51, "SP": 3431}` - SP position in ms
+  ```
+  Sub pSetVideoPosMS(mPOS)  'set position of video/audio in ms,  must be playing already or will be ignored.  { "mt":301, "SN": XX, "FN":51, "SP": 3431} 
+    PuPlayer.SendMSG "{ ""mt"":301, ""SN"": "& "5"& ", ""FN"": 51, ""SP"":"&mPOS&" }"
+  end Sub
+  ```
+* `52` - set text quality, anti aliassing (similar to 32?) - `{ "mt":301, "SN": XX, "FN":52, "SC": aa_level }` SC 0-4 from low to high
+  ```vbscript
+  Sub pDMDSetTextQuality(AALevel)  '0 to 4 aa.  4 is sloooooower.  default 1,  perhaps use 2-3 if small desktop view.  only affect text quality.  can set per label too with 'qual' settings.
+     PuPlayer.SendMSG "{ ""mt"":301, ""SN"": 5, ""FN"":52, ""SC"": "& AALevel &" }"    'slow pc mode
+  end Sub
+  ```
+* `53` experimental frame rescale -
+  ```vbscript
+  Sub pForceFrameRescale(PuPID, fWidth, fHeight)   'Experimental,  FORCE higher frame size to autosize and rescale nicer,  like AA and auto-fit.
+       PuPlayer.SendMSG "{ ""mt"":301, ""SN"": "&PuPID& ", ""FN"": 53, ""XW"": "&fWidth&", ""YH"": "&fHeight&", ""FR"":1 }"   
+  end Sub  
+  ```
 
 > [!NOTE]
 > Some of these are [implemented in Visual Pinball Standalone](https://github.com/vpinball/vpinball/blob/9443e1f0b54dcdc755a64354fd34836c2ac2bc4b/standalone/inc/pup/PUPPinDisplay.cpp#L408).
