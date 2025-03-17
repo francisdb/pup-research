@@ -108,15 +108,15 @@ Functions:
   End Sub
   ```
 * `31` - pup jukebox control - `{'mt':301, 'SN': XX, 'FN':31, 'PM':1 }` - PM 1 = next, PM 2 = previous
-```vbscript
-Sub PuPlayListPrior(pupid)
+  ```vbscript
+  Sub PuPlayListPrior(pupid)
 	PuPlayer.SendMSG("{'mt':301, 'SN': " & pupid & ", 'FN':31, 'PM':1 }")
-End Sub
+  End Sub
 
-Sub PuPlayListNext(pupid)
+  Sub PuPlayListNext(pupid)
 	PuPlayer.SendMSG("{'mt':301, 'SN': " & pupid & ", 'FN':31, 'PM':2 }")
-End Sub
-```
+  End Sub
+  ```
 * `32` - no antialias on font render `{ "mt":301, "SN": 1, "FN":32, "FQ":3 }` FQ - font quality (3 = no aa?)
 * `33` - set pupdmd for mirror and hide behind other pups???  `"{ "mt":301, "SN": XX, "FN":33 } `
 * `34` - hideoverlay text during next videoplay on DMD auto return??? `{ "mt":301, "SN": XX, "FN": 34 }`
