@@ -11,7 +11,7 @@ https://nailbuster.com/wikipinup/doku.php?id=pinup_player_tables
 
 ## Important files
 
-Pup packs are distributed as directories. Depending on the operating system and the flavour of pinball emulater you have to place them in a specific directory to be activated.
+Pup packs are distributed as directories. Depending on the operating system and the flavour of pinball emulator you have to place them in a specific directory to be activated.
 
 There are 3 main files that set up the PuP-Pack:
 * `screens.pup` - Lists all screens and where they are displayed
