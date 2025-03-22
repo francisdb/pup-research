@@ -2,6 +2,8 @@
 
 Some reverse engineering of pinup popper pup packs
 
+More excellent research done by @jsm174 at https://gist.github.com/jsm174/e5aa4ebe70052b5cf2ef49ab40c35dfb
+
 ## What are Pup Packs and where are they used
 
 PuP Packs are a mix of media and metadata to render animated pinball table backbox screens for the [Visual Pinball](https://github.com/vpinball/vpinball) and [Future Pinball](https://futurepinball.com/) ecosystems.
