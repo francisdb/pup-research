@@ -2,8 +2,11 @@
 
 Some reverse engineering of pinup popper pup packs for Visual Pinball Standalone (Linux, macOS, iOS, Android, ...)
 
+Other resurces:
+
 * More excellent research done by @jsm174 at https://gist.github.com/jsm174/e5aa4ebe70052b5cf2ef49ab40c35dfb
 * Findings by @LegendsUnchained at https://github.com/LegendsUnchained/vpx-standalone-alp4k/wiki/%5B11%5D-PUP-Pack-Table-Configuration
+* Wiki by @dekay at https://github.com/dekay/vpinball-wiki/wiki/PUP-Reverse-Engineering
 
 > [!WARNING]
 > This is not a manual for making PuP packs. It's research for implementing PuP pack functionality on non-windows systems. Some of the things listed here are probably deprecated and should no longer be used.
