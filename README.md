@@ -189,3 +189,44 @@ Functions:
 
 > [!NOTE]
 > Some of these are [implemented in Visual Pinball Standalone](https://github.com/vpinball/vpinball/blob/9443e1f0b54dcdc755a64354fd34836c2ac2bc4b/standalone/inc/pup/PUPPinDisplay.cpp#L408).
+
+## Editor help
+
+```
+PuP-Pack Editor v1.4 Help:
+
+ PUPVIDEOS\XXXXXX  where XXXXX is the ROMNAME of table.
+(best to run table and it will auto-create a blank folder there for you)
+
+PlayLists:  +++++++++++++++++++
+Make sure your playlist have names that are folder safe (meaning the use 
+characters windows is OK using in a foldername):
+AlphaSort:  OFF=Random/shuffle,  1= alpha sort
+Priority (0..10):  if another video is playing the one with higher prioirty 
+'wins'...
+
+Triggers:
+Trigger example separate by ',' commas (unlimited triggers, but max 5 
+checks/trigger)
+if you don't put = then assumes '1',  do NOT use leading zeros like S04=1, 
+its S4=1
+
+S1,W4=1,W5=0
+means it will trigger when Solenoid 1 is '1', Switch 4 is on and switch5 is 
+off.
+
+S=Solenoids
+W=Switches
+L=Lights
+G=GIs
+E=DOFs
+M=mechs
+D=PUPCAP DMD match
+
+Counter=20 means it will 'FIRE' video every 20 triggers.
+
+loop will loop video until a new video is displayed.
+
+restseconds:  will not repeat trigger until restseconds have passed. if you 
+leave blank then will use playlist default.
+```
