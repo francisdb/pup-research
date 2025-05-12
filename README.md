@@ -230,3 +230,22 @@ loop will loop video until a new video is displayed.
 restseconds:  will not repeat trigger until restseconds have passed. if you 
 leave blank then will use playlist default.
 ```
+
+### Rest seconds
+
+Wait time before triggering again
+
+in seconds
+if > 99, treat as millis
+if < 0, delay before firing trigger
+
+eg: `-3`, wait 3 seconds before trigger
+eg2: `200`, wait 0,2 seconds before triggering again
+
+### Length (s)
+
+How long in seconds the media should play. Empty means until end of media. In case of an image forever?
+
+### D0 Event
+
+On launch the `D0` event is triggered
